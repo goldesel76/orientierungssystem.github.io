@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schulzentrum Navigation - Alwin-Lonke-Straße</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Schulzentrum Navigation</h1>
+            <p class="subtitle">Alwin-Lonke-Straße</p>
+        </div>
+    </header>
+
+    <!-- Main Navigation Container -->
+    <main class="container">
+        
+        <!-- Current Location Display -->
+        <section class="location-banner">
+            <div class="location-icon">📍</div>
+            <div class="location-text">
+                <p class="location-label">Du bist hier:</p>
+                <p class="location-current" id="currentLocation">Eingangshalle</p>
+            </div>
+        </section>
+
+        <!-- Search Bar -->
+        <section class="search-section">
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="search-input" 
+                    placeholder="Raum suchen (z.B. C2-1-05, Cafeteria, Labor...)"
+                    autocomplete="off"
+                >
+                <button class="search-btn" id="searchBtn">🔍</button>
+            </div>
+            <div class="search-results" id="searchResults"></div>
+        </section>
+
+        <!-- Zone Filter -->
+        <section class="zone-filter">
+            <h2 class="section-title">Nach Zone filtern</h2>
+            <div class="zone-grid">
+                <button class="zone-card zone-a" data-zone="A">
+                    <div class="zone-icon">⭐</div>
+                    <div class="zone-info">
+                        <h3>Zone A</h3>
+                        <p>Zentrale Schulzone</p>
+                    </div>
+                </button>
+
+                <button class="zone-card zone-b" data-zone="B">
+                    <div class="zone-icon">📚</div>
+                    <div class="zone-info">
+                        <h3>Zone B</h3>
+                        <p>Allgemeiner Unterricht</p>
+                    </div>
+                </button>
+
+                <button class="zone-card zone-c" data-zone="C">
+                    <div class="zone-icon">🔬</div>
+                    <div class="zone-info">
+                        <h3>Zone C</h3>
+                        <p>Fach- & Ausbildung</p>
+                    </div>
+                </button>
+
+                <button class="zone-card zone-d" data-zone="D">
+                    <div class="zone-icon">🏢</div>
+                    <div class="zone-info">
+                        <h3>Zone D</h3>
+                        <p>Periphere Bestandszone</p>
+                    </div>
+                </button>
+
+                <button class="zone-card zone-e" data-zone="E">
+                    <div class="zone-icon">⚽</div>
+                    <div class="zone-info">
+                        <h3>Zone E</h3>
+                        <p>Sportzone</p>
+                    </div>
+                </button>
+            </div>
+        </section>
+
+        <!-- Room Type Filter -->
+        <section class="room-type-section">
+            <h2 class="section-title">Nach Raumtyp filtern</h2>
+            <div class="filter-chips">
+                <button class="filter-chip" data-type="klassenraum">Klassenräume</button>
+                <button class="filter-chip" data-type="labor">Labore</button>
+                <button class="filter-chip" data-type="verwaltung">Verwaltung</button>
+                <button class="filter-chip" data-type="cafeteria">Cafeteria</button>
+                <button class="filter-chip" data-type="toilette">Toiletten</button>
+                <button class="filter-chip" data-type="ausgang">Ausgänge</button>
+            </div>
+        </section>
+
+        <!-- Quick Access -->
+        <section class="quick-access">
+            <h2 class="section-title">Häufig gesucht</h2>
+            <div class="quick-links">
+                <button class="quick-link" data-room="cafeteria">
+                    <span class="quick-icon">☕</span>
+                    <span>Cafeteria</span>
+                </button>
+                <button class="quick-link" data-room="verwaltung">
+                    <span class="quick-icon">🏛️</span>
+                    <span>Verwaltung</span>
+                </button>
+                <button class="quick-link" data-room="toiletten">
+                    <span class="quick-icon">🚻</span>
+                    <span>Toiletten</span>
+                </button>
+                <button class="quick-link" data-room="sporthalle">
+                    <span class="quick-icon">🏃</span>
+                    <span>Sporthalle</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Route Display (Hidden by default) -->
+        <section class="route-display" id="routeDisplay" style="display: none;">
+            <div class="route-header">
+                <h2>Route zu: <span id="routeDestination"></span></h2>
+                <button class="close-btn" id="closeRoute">✕</button>
+            </div>
+            
+            <div class="route-info">
+                <div class="route-stat">
+                    <div class="stat-icon">🚶</div>
+                    <div class="stat-text">
+                        <p class="stat-label">Gehzeit</p>
+                        <p class="stat-value" id="routeTime">3 Min</p>
+                    </div>
+                </div>
+                <div class="route-stat">
+                    <div class="stat-icon">📏</div>
+                    <div class="stat-text">
+                        <p class="stat-label">Entfernung</p>
+                        <p class="stat-value" id="routeDistance">120m</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="route-steps" id="routeSteps">
+                <!-- Steps will be dynamically inserted here -->
+            </div>
+
+            <button class="start-navigation-btn" id="startNavBtn">
+                Navigation starten
+            </button>
+        </section>
+
+        <!-- Zone Detail View (Hidden by default) -->
+        <section class="zone-detail" id="zoneDetail" style="display: none;">
+            <div class="zone-detail-header">
+                <button class="back-btn" id="backBtn">← Zurück</button>
+                <h2 id="zoneDetailTitle">Zone A - Zentrale Schulzone</h2>
+            </div>
+            
+            <div class="zone-rooms-list" id="zoneRoomsList">
+                <!-- Rooms will be dynamically inserted here -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>Schulzentrum an der Alwin-Lonke-Straße</p>
+            <p class="footer-note">Hierarchisches Zonensystem: Zone → Trakt → Stockwerk → Raum</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
